@@ -14,12 +14,12 @@ export type diffcordClientOptions = {
     basePath?: string
 }
 
-export class DiffcordClient {
+export class DiffcordHTTPClient {
 
     private static readonly BASE_PATH: string = "https://api.diffcord.com/";
 
     private basePath: string;
-    private apiKey: string;
+    public apiKey: string;
     private apiVersion: string;
     private headers: HeadersInit | undefined;
     private base_url: string;
@@ -29,10 +29,10 @@ export class DiffcordClient {
      * @param apiVersion The API version to use. Defaults to "v1".
      * @param basePath The base path to use. Defaults to "https://api.diffcord.com/".
      */
-    public constructor(apiKey: string, clientOptions?: diffcordClientOptions) {
+    public constructor(apiKey: string, options?: diffcordClientOptions) {
         this.apiKey = apiKey;
-        this.apiVersion = clientOptions?.apiVersion ?? "v1";
-        this.basePath = clientOptions?.basePath ?? DiffcordClient.BASE_PATH;
+        this.apiVersion = options?.apiVersion ?? "v1";
+        this.basePath = options?.basePath ?? DiffcordHTTPClient.BASE_PATH;
         this.headers = this.create_headers();
         this.base_url = this.create_base_url();
     }
@@ -56,7 +56,7 @@ export class DiffcordClient {
         const json = await response.json() as DiffcordResponse;
 
         if (!response.ok) {
-            throw DiffcordClient.handle_api_error(json.error as DiffcordError, response.status)
+            throw DiffcordHTTPClient.handle_api_error(json.error as DiffcordError, response.status)
         }
 
         return json.data as VoteUser;
@@ -80,7 +80,7 @@ export class DiffcordClient {
         const json = await response.json() as DiffcordResponse;
 
         if (!response.ok) {
-            throw DiffcordClient.handle_api_error(json.error as DiffcordError, response.status)
+            throw DiffcordHTTPClient.handle_api_error(json.error as DiffcordError, response.status)
         }
 
         return json.data as FetchBotVoteInfoResponse;
@@ -114,7 +114,7 @@ export class DiffcordClient {
 
         if (!response.ok) {
             const json = await response.json() as DiffcordResponse;
-            throw DiffcordClient.handle_api_error(json.error as DiffcordError, response.status)
+            throw DiffcordHTTPClient.handle_api_error(json.error as DiffcordError, response.status)
         }
     }
 
