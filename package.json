@@ -12,5 +12,12 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/diff-cord/node-sdk"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.1"
+  },
+  "devDependencies": {
+    "@types/node": "^18.15.11",
+    "@types/node-fetch": "^2.6.3"
   }
 }
