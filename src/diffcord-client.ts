@@ -112,9 +112,8 @@ export class DiffcordClient {
             headers: this.headers,
         });
 
-        const json = await response.json() as DiffcordResponse;
-
         if (!response.ok) {
+            const json = await response.json() as DiffcordResponse;
             throw DiffcordClient.handle_api_error(json.error as DiffcordError, response.status)
         }
     }
