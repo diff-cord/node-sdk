@@ -20,7 +20,7 @@ export class DiffcordWebhook {
             // return with status 401 if authentication is not provided
             const sentAuthCode = req.headers.authorization;
             if (sentAuthCode && sentAuthCode !== this.authCode) {
-                res.status(401).send("Unauthorized");
+                res.status(401).end()
                 return;
             }
 
@@ -31,10 +31,11 @@ export class DiffcordWebhook {
                 try {
                     await voteHandler(vote);
                 } catch (err) {
-                    res.status(500).send('Error processing vote');
+                    res.status(500).end()
+                    return;
                 }
 
-                res.status(200).send('OK');
+                res.status(200).end()
             });
         }
     }

@@ -1,23 +1,29 @@
 import express from "express";
 import { DiffcordHTTPClient } from "../src/diffcord-client";
 import { DiffcordWebhook } from "../src/diffcord-webhook";
-import { DiffcordVote } from "../src";
+import { DiffcordStatsAutoPoster, DiffcordVote } from "../src";
 
 run()
 
 async function run() {
 
     // client to make requests with
-    const client = new DiffcordHTTPClient("84c60e1be09f41fab927cbb766575b62");
-
+    const diffClient = new DiffcordHTTPClient("84c60e1be09f41fab927cbb766575b62");
+    
     // examples of client methods:
 
     const exampleDiscordUserID = "456029823537903361";
     // output will be similar to that of: https://docs.diffcord.com/diffcord-documentation/resources/vote-user
-    const a = await client.getUserVoteInfo(exampleDiscordUserID);
+    const a = await diffClient.getUserVoteInfo(exampleDiscordUserID);
 
     // output will be similar to that of: https://docs.diffcord.com/diffcord-documentation/endpoints/bots
-    const b = await client.getVoteInfo();
+    const b = await diffClient.getVoteInfo();
+
+    // auto poster example:
+    
+    const discordClient: any = null; // replace with your current discord client or use options to pass in custom get guild count and shard count functions
+
+    const autoPoster = new DiffcordStatsAutoPoster(diffClient, discordClient);
 
     // webhook listener example:
 

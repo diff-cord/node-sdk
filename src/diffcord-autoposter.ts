@@ -10,7 +10,9 @@ export type DiffcordStatsAutoPosterOptions = {
     /** Override function to get guild count, defaults to custom validation**/
     customGetGuildCount?: () => Promise<number>,
     /** Override function to get shard count, defaults to custom validation**/
-    customGetShardCount?: () => Promise<number>
+    customGetShardCount?: () => Promise<number>,
+    /** Function to run after posting stats**/
+    onPost?: (() => Promise<void>) | undefined;
 }
 
 enum DiscordLibrary {
@@ -23,6 +25,7 @@ export class DiffcordStatsAutoPoster {
     private discordClient: any;
     private getGuildCount: () => Promise<number>;
     private getShardCount: () => Promise<number>;
+    private onPost: (() => Promise<void>) | undefined;
     private interval: number;
     private discordLibrary: DiscordLibrary | undefined;
 
@@ -42,6 +45,7 @@ export class DiffcordStatsAutoPoster {
 
         this.getGuildCount = options?.customGetGuildCount ?? this._defaultGetGuildCount;
         this.getShardCount = options?.customGetShardCount ?? this._defaultGetShardCount;
+        this.onPost = options?.onPost;
 
         this.discordLibrary = this._getDiscordClientLibrary();
 
@@ -56,6 +60,10 @@ export class DiffcordStatsAutoPoster {
         const shardCount = await this.getShardCount();
 
         this.diffcordClient.updateStats(guildCount, shardCount);
+
+        if (this.onPost) {
+            await this.onPost();
+        }
     }
 
     private _defaultGetGuildCount(): Promise<number> {
@@ -81,7 +89,6 @@ export class DiffcordStatsAutoPoster {
     }
 
     private _getDiscordClientLibrary(): DiscordLibrary | undefined {
-
         // TODO: this is not tested, please test and report any issues
 
         if (!this.discordClient) {
