@@ -18,7 +18,7 @@ run()
 async function run() {
 
     // client to make requests with
-    const diffClient = new DiffcordHTTPClient("84c60e1be09f41fab927cbb766575b62");
+    const diffClient = new DiffcordHTTPClient("YOUR_DIFFCORD_API_TOKEN");
     
     // examples of client methods:
 
