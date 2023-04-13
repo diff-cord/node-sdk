@@ -11,7 +11,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/diff-cord/node-sdk"
+    "url": "git+https://github.com/diff-cord/node-sdk.git"
   },
   "dependencies": {
     "@types/express": "^4.17.17",
@@ -21,5 +21,18 @@
   "devDependencies": {
     "@types/node": "^18.15.11",
     "@types/node-fetch": "^2.6.3"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/diff-cord/node-sdk/issues"
+  },
+  "homepage": "https://github.com/diff-cord/node-sdk#readme",
+  "directories": {
+    "example": "examples",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "1elasmarjad",
+  "license": "MIT"
 }

@@ -89,6 +89,7 @@ export class DiffcordStatsAutoPoster {
     }
 
     private _getDiscordClientLibrary(): DiscordLibrary | undefined {
+        
         // TODO: this is not tested, please test and report any issues
 
         if (!this.discordClient) {
