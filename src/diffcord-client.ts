@@ -30,11 +30,13 @@ export class DiffcordHTTPClient {
      * @param basePath The base path to use. Defaults to "https://api.diffcord.com/".
      */
     public constructor(apiKey: string, options?: diffcordClientOptions) {
+        if (!apiKey) throw new Error("apiKey is required.");
+
         this.apiKey = apiKey;
         this.apiVersion = options?.apiVersion ?? "v1";
         this.basePath = options?.basePath ?? DiffcordHTTPClient.BASE_PATH;
-        this.headers = this.create_headers();
-        this.base_url = this.create_base_url();
+        this.headers = this._create_headers();
+        this.base_url = this._create_base_url();
     }
 
     /**
@@ -56,7 +58,7 @@ export class DiffcordHTTPClient {
         const json = await response.json() as DiffcordResponse;
 
         if (!response.ok) {
-            throw DiffcordHTTPClient.handle_api_error(json.error as DiffcordError, response.status)
+            throw DiffcordHTTPClient._handle_api_error(json.error as DiffcordError, response.status)
         }
 
         return json.data as VoteUser;
@@ -80,7 +82,7 @@ export class DiffcordHTTPClient {
         const json = await response.json() as DiffcordResponse;
 
         if (!response.ok) {
-            throw DiffcordHTTPClient.handle_api_error(json.error as DiffcordError, response.status)
+            throw DiffcordHTTPClient._handle_api_error(json.error as DiffcordError, response.status)
         }
 
         return json.data as FetchBotVoteInfoResponse;
@@ -114,7 +116,7 @@ export class DiffcordHTTPClient {
 
         if (!response.ok) {
             const json = await response.json() as DiffcordResponse;
-            throw DiffcordHTTPClient.handle_api_error(json.error as DiffcordError, response.status)
+            throw DiffcordHTTPClient._handle_api_error(json.error as DiffcordError, response.status)
         }
     }
 
@@ -122,7 +124,7 @@ export class DiffcordHTTPClient {
      * Creates base url for API requests.
      * @returns The base url for API requests.
      */
-    private create_base_url(): string {
+    private _create_base_url(): string {
         return `${this.basePath}${this.apiVersion}`;
     }
 
@@ -130,7 +132,7 @@ export class DiffcordHTTPClient {
      * Creates the headers for API requests.
      * @returns The headers for API requests.
      */
-    private create_headers(): HeadersInit | undefined {
+    private _create_headers(): HeadersInit | undefined {
         return {
             "x-api-key": this.apiKey,
             "Content-Type": "application/json",
@@ -138,7 +140,7 @@ export class DiffcordHTTPClient {
         }
     }
 
-    private static handle_api_error(error: DiffcordError, status: number): Error {
+    private static _handle_api_error(error: DiffcordError, status: number): Error {
         return new Error(`Request failed with code ${error.code}, message: ${error.message} and http status ${status}`);
     }
 
