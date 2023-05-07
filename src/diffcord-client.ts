@@ -5,18 +5,18 @@ import fetch, { HeadersInit } from 'node-fetch';
 /**
  * @interface diffcordClientOptions Represents the options for the DiffcordClient. 
  * @param apiVersion The API version to use. Defaults to "v1".
- * @param basePath The base path to use. Defaults to "https://api.diffcord.com/". 
+ * @param basePath The base path to use. Defaults to "https://diffcord.com/api/". 
  */
 export type diffcordClientOptions = {
     /**The API version to use. Defaults to "v1"**/
     apiVersion?: string,
-    /**The base path to use. Defaults to "https://api.diffcord.com/"**/
+    /**The base path to use. Defaults to "https://diffcord.com/api/"**/
     basePath?: string
 }
 
 export class DiffcordHTTPClient {
 
-    private static readonly BASE_PATH: string = "https://api.diffcord.com/";
+    private static readonly BASE_PATH: string = "https://diffcord.com/api/";
 
     private basePath: string;
     public apiKey: string;
@@ -27,7 +27,7 @@ export class DiffcordHTTPClient {
     /**
      * @param apiKey The API key for the bot from the Diffcord API Dashboard.
      * @param apiVersion The API version to use. Defaults to "v1".
-     * @param basePath The base path to use. Defaults to "https://api.diffcord.com/".
+     * @param basePath The base path to use. Defaults to "https://diffcord.com/api/".
      */
     public constructor(apiKey: string, options?: diffcordClientOptions) {
         if (!apiKey) throw new Error("apiKey is required.");
@@ -135,6 +135,7 @@ export class DiffcordHTTPClient {
     private _create_headers(): HeadersInit | undefined {
         return {
             "x-api-key": this.apiKey,
+            "Authorization": this.apiKey,
             "Content-Type": "application/json",
             "User-Agent": "Diffcord-Node-SDK"
         }
