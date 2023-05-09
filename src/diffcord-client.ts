@@ -5,18 +5,18 @@ import fetch, { HeadersInit } from 'node-fetch';
 /**
  * @interface diffcordClientOptions Represents the options for the DiffcordClient. 
  * @param apiVersion The API version to use. Defaults to "v1".
- * @param basePath The base path to use. Defaults to "https://diffcord.com/api/". 
+ * @param basePath The base path to use. Defaults to "https://www.diffcord.com/api//". 
  */
 export type diffcordClientOptions = {
     /**The API version to use. Defaults to "v1"**/
     apiVersion?: string,
-    /**The base path to use. Defaults to "https://diffcord.com/api/"**/
+    /**The base path to use. Defaults to "https://www.diffcord.com/api/"**/
     basePath?: string
 }
 
 export class DiffcordHTTPClient {
 
-    private static readonly BASE_PATH: string = "https://diffcord.com/api/";
+    private static readonly BASE_PATH: string = "https://www.diffcord.com/api/";
 
     private basePath: string;
     public apiKey: string;
@@ -27,7 +27,7 @@ export class DiffcordHTTPClient {
     /**
      * @param apiKey The API key for the bot from the Diffcord API Dashboard.
      * @param apiVersion The API version to use. Defaults to "v1".
-     * @param basePath The base path to use. Defaults to "https://diffcord.com/api/".
+     * @param basePath The base path to use. Defaults to "https://www.diffcord.com/api/".
      */
     public constructor(apiKey: string, options?: diffcordClientOptions) {
         if (!apiKey) throw new Error("apiKey is required.");
